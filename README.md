@@ -1,7 +1,6 @@
-
 # Arch Linux KDE Homelab
 
-A personal homelab running on an Arch Linux laptop with KDE Plasma. It hosts Vaultwarden for password management, Samba for file sharing, and Wazuh for security monitoring. Tailscale provides private networking, with MagicDNS enabled and Mullvad Public DNS configured as a global nameserver.
+A personal homelab running on an Arch Linux laptop with KDE Plasma. It hosts Vaultwarden for password management, Samba for file sharing, KRDP for remote desktop access, and Wazuh for security monitoring. Tailscale provides private networking, with MagicDNS enabled and Mullvad Public DNS configured as a global nameserver.
 
 Everything currently runs directly on the host. I don't use containers or virtual machines on this laptop.
 
@@ -31,7 +30,7 @@ The laptop originally had 12 GB of RAM. I upgraded it to 16 GB by opening the la
 - **Containers:** None
 - **Virtual Machines:** None currently installed
 
-Arch is my daily-use operating system as well as the host for my homelab services.
+Arch is the host for my homelab services.
 
 ## Installation and Disk Encryption
 
@@ -56,6 +55,7 @@ The following services currently make up the core of the homelab.
 |---|---|---|
 | Vaultwarden | Self-hosted password management | Arch Linux host |
 | Samba / SMB | Network file sharing | Arch Linux host |
+| KRDP | Remote desktop access | Arch Linux host |
 | Wazuh Indexer | Stores and indexes security data | Arch Linux host |
 | Wazuh Manager | Processes security events and agent data | Arch Linux host |
 | Wazuh Dashboard | Web interface for security monitoring | Arch Linux host |
@@ -86,9 +86,20 @@ Samba provides file sharing between compatible devices on the network.
 - **Purpose:** Network file sharing
 - **Remote Access:** Tailscale
 - **Authentication:** Password-based
+- **Shared Folders:** One shared folder
 - **Backups:** No regular backup routine currently configured
 
 SMB is intended for trusted devices rather than public internet access. Port 445 should not be exposed directly to the public internet.
+
+### KRDP Remote Desktop
+
+KRDP provides remote desktop access to my KDE Plasma system.
+
+- **Purpose:** Remote desktop access
+- **Deployment:** Arch Linux host
+- **Authentication:** Username and password
+
+Configuring and using KRDP provides practical experience with remote access to a Linux desktop and the basic administration of a remote-access service. Its setup was relatively straightforward, and I am still learning about its configuration and security considerations.
 
 ### Wazuh Security Monitoring
 
@@ -105,7 +116,9 @@ The server-side components are installed directly on Arch Linux using packages f
 
 I encountered package conflicts and configuration issues during setup and used ChatGPT to help troubleshoot them. I haven't documented every configuration change, so this section describes the current architecture rather than a complete reproduction guide.
 
-Wazuh is part of my ongoing exploration of Linux security monitoring and endpoint visibility.
+Wazuh is part of my ongoing exploration of Linux security monitoring and endpoint visibility. This deployment has given me hands-on experience installing server-side monitoring components and connecting a separate endpoint through an agent. I am still learning how to interpret alerts and understand the events collected by the platform, and I do not yet have substantial experience investigating security incidents.
+
+The limited number of alerts that appear critical or clearly malicious does not establish that the configuration is correct or that the environment is free of threats.
 
 Because the Indexer, Manager, and Dashboard share the same laptop, they also share its availability and hardware resources.
 
@@ -270,18 +283,14 @@ One lesson from the process is that adding more networking tools doesn't necessa
 - No regular backups are currently configured.
 - Recovery procedures are not fully documented.
 - Some historical networking configurations were not preserved.
+- Wazuh alert interpretation and monitoring are still areas I'm learning.
 
 ## Future Improvements
 
 - [ ] Establish a reliable backup and recovery strategy.
 - [ ] Document Vaultwarden's data storage and restoration procedure.
-- [ ] Document Samba shares and access controls.
+- [ ] Improve my understanding of Wazuh alerts and monitoring capabilities.
 - [ ] Review UFW rules and exposed services.
-- [ ] Document Wazuh configuration and agent enrollment.
-- [ ] Verify DNS behavior across Tailscale devices.
-- [ ] Record important configuration changes and rollback steps.
-- [ ] Test recovery procedures.
-- [ ] Add a more detailed network diagram without sensitive information.
 
 ## Privacy
 
