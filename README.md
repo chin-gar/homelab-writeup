@@ -22,7 +22,7 @@ The laptop originally had 12 GB of RAM. I upgraded it to 16 GB by opening the la
 
 - **Distribution:** Arch Linux
 - **Desktop Environment:** KDE Plasma
-- **Kernel:** `7.2.10-arch1-1` (reported by `uname -a`; may change with updates)
+- **Kernel:** `7.2.15-arch1-1` (reported by `uname -a`; may change with updates)
 - **Architecture:** x86_64
 - **Package Manager:** pacman
 - **Init System:** systemd
